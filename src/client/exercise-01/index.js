@@ -17,10 +17,9 @@ appModule.component('layout', {
 });
 
 appModule.controller('HelloController',
-  [function () {
+  ['$scope', function ($scope) {
     this.names = [];
-
-    this.addName = function () {
+     this.addName = function () {
       this.names.push(this.name);
       this.name = '';
       console.log('added a name:', this);
@@ -30,7 +29,11 @@ appModule.controller('HelloController',
       // XXXX BAAAD NOT ANGULAR !!!!
       // DON'T WORK !
       // FIX ME !
-      setTimeout(() => this.names.shift(), 1000);
+     setTimeout(() =>
+                     {$scope.$applyAsync(() =>
+                               {this.names.shift()
+                               })
+                     }, 1000);
       ////////////////////////////////////////
     };
   }]
